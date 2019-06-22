@@ -1,6 +1,6 @@
 import { Document } from 'mongoose';
 
-export interface Auth {
+export interface Provider {
     readonly provider: string;
     readonly id: string;
 }
@@ -14,5 +14,5 @@ export interface User extends Document {
     readonly age: string;
     readonly gender: string;
     readonly dateCreated: Date;
-    readonly auth?: Auth;
+    readonly provider?: Provider;
 }

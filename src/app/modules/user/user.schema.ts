@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
-import { Auth } from './user.interface';
+import { Provider } from './user.interface';
 
-export const AuthSchema = new mongoose.Schema({
+export const ProviderSchema = new mongoose.Schema({
     provider: String,
     id: String,
 });
@@ -15,5 +15,5 @@ export const UserSchema = new mongoose.Schema({
     age: Number,
     gender: String,
     dateCreated: { type: Date, default: Date.now },
-    auth: { type: AuthSchema, default: null },
+    provider: { type: ProviderSchema, default: null },
 });

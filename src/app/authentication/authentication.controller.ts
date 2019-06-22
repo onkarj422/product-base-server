@@ -1,12 +1,13 @@
 import { Controller, Get, UseGuards, Req, Res } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-@Controller('auth')
+@Controller('api/auth')
 export class AuthenticationController {
 
     @Get('google')
     @UseGuards(AuthGuard('google'))
     public async loginGoogle() {
+        console.log("Yetay?");
         // google login
     }
 

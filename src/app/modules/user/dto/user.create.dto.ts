@@ -1,5 +1,6 @@
 import { IsEmail, IsNotEmpty, IsNumber, IsPhoneNumber } from 'class-validator';
 import { IsRequiredForProvider } from './validators/password.required';
+import { ProviderDTO } from './user.provider.dto';
 
 export class CreateUserDTO {
 
@@ -27,4 +28,6 @@ export class CreateUserDTO {
     @IsNotEmpty()
     @IsNumber()
     readonly dateCreated: number;
+
+    readonly provider: ProviderDTO;
 }

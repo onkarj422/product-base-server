@@ -1,21 +1,21 @@
-import { Injectable } from 'src/app/authentication/passport-strategy/node_modules/@nestjs/common';
-import { PassportStrategy } from 'src/app/authentication/passport-strategy/node_modules/@nestjs/passport';
-import { Strategy } from 'src/app/authentication/passport-strategy/node_modules/passport-google-oauth20';
+import { Injectable } from '@nestjs/common';
+import { PassportStrategy } from '@nestjs/passport';
+import { Strategy } from 'passport-google-oauth20';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
 
     constructor() {
         super({
-            clientID: '309182036165-ql1okud4crrgor0akqh84mp44shg1d3p.apps.googleusercontent.com',     // <- Replace this with your client id
-            clientSecret: 'P5FDOjyBHbBvrFqnOipoqezi', // <- Replace this with your client secret
-            callbackURL: 'http://localhost:4200/auth/google/callback',
+            clientID: '683474798249-nmf83pb8h3jikam8gosghks8vq6gpluh.apps.googleusercontent.com',     // <- Replace this with your client id
+            clientSecret: 'Uv6yRhDMvrOl7LGkwDw7wUfE', // <- Replace this with your client secret
+            callbackURL: 'http://localhost:8080/api/auth/google/callback',
             passReqToCallback: true,
-            scope: ['profile', 'email'],
+            scope: ['profile'],
         });
     }
 
-    async validate(request: any, accessToken: string, refreshToken: string, profile, done: (x, y) => void) {
+    async validate(request: any, accessToken: string, refreshToken: string, profile, done) {
         try {
             console.log(profile);
 

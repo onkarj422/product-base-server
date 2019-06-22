@@ -22,7 +22,7 @@ export class UserService extends CrudService<User, CreateUserDTO> {
         return this.model.findOne({ options }).exec();
     }
 
-    public async generateUser(userData: object) {
+    public async generateUser(userData: object, provider) {
         const user = null;
         return user;
     }
