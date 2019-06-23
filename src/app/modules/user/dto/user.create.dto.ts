@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsNumber, IsPhoneNumber } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsNumber, IsPhoneNumber, IsString } from 'class-validator';
 import { IsRequiredForProvider } from './validators/password.required';
 import { ProviderDTO } from './user.provider.dto';
 
@@ -12,6 +12,9 @@ export class CreateUserDTO {
 
     @IsRequiredForProvider()
     readonly password: string;
+
+    @IsString()
+    readonly displayPicture: string;
 
     @IsRequiredForProvider()
     @IsPhoneNumber('IN')

@@ -1,8 +1,17 @@
-// export const generateUser = {
-//     google: (profile) => {
+import { User } from './user.interface';
 
-//     },
-//     facebook: () => {
-
-//     }
-// };
+export const generateUserFromProfile = {
+    google: (profile) => {
+        const { name: { familyName, givenName }, photos, provider, id } = profile;
+        const user: User = {
+            firstName: givenName,
+            lastName: familyName,
+            displayPicture: photos[0].value,
+            dateCreated: Date.now(),
+            provider: {
+                provider, id,
+            },
+        };
+        return user;
+    },
+};

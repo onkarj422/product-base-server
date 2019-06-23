@@ -6,7 +6,7 @@ import {
     ValidationArguments,
     Validator } from 'class-validator';
 import { UserService } from '../../user.service';
-import { Provider } from '../../../../authentication/providers/constants';
+import { AuthProvider } from 'src/app/authentication/constants';
 
 @ValidatorConstraint({ async: true })
 export class IsRequiredForProviderConstraints implements ValidatorConstraintInterface {
@@ -17,14 +17,13 @@ export class IsRequiredForProviderConstraints implements ValidatorConstraintInte
         const provider = this.userService.getProvider();
         const validator = new Validator();
         let isValid = false;
-        if (provider === Provider.GOOGLE || provider === Provider.FACEBOOK) {
+        if (provider === AuthProvider.GOOGLE || provider === AuthProvider.FACEBOOK) {
             isValid = true;
         } else if (validator.isNotEmpty(value)) {
             isValid = true;
         }
         return isValid;
     }
-
 }
 
 export function IsRequiredForProvider(validationOptions?: ValidationOptions) {

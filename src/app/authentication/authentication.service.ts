@@ -1,27 +1,36 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { sign } from 'jsonwebtoken';
 import { UserService } from '../modules/user/user.service';
 import { User } from '../modules/user/user.interface';
-import { Provider } from './providers/constants';
+import { AuthProvider } from 'src/app/authentication/constants';
+import { privateKEY } from './jwt/utils';
 
 @Injectable()
 export class AuthenticationService {
-    private readonly JWT_SECRET_KEY = '#1234%';
 
     constructor(private readonly userService: UserService) {}
 
-    async validateOAuth(profile, provider: Provider) {
-        console.log(profile, provider);
+    public async validateGoogleAuth(profile) {
         const { id } = profile;
         try {
-            this.userService.setProvider(provider);
-            let user: User = await this.userService.findOne({ id });
-            if (!user) {
-                user = await this.userService.generateUser(profile, provider);
+            this.userService.setProvider(AuthProvider.GOOGLE);
+            let user: User = await this.userService.findOne({ provider: { id } });
+            if (!user && profile) {
+                user = await this.userService.createFromProfile(profile, AuthProvider.GOOGLE);
             }
-
+            const jwt = await this.createJWT(user);
+            return jwt;
         } catch (err) {
-            throw err;
+            throw new UnauthorizedException(err);
         }
+    }
+
+    public async createJWT(user) {
+        const signOptions = {
+            expiresIn: '48h',
+            algorithm: 'RS256',
+        };
+        const jwt: string = sign(JSON.parse(JSON.stringify(user)), privateKEY, signOptions);
+        return jwt;
     }
 }

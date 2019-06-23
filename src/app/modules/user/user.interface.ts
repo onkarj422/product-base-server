@@ -6,13 +6,14 @@ export interface Provider {
 }
 
 export interface User extends Document {
-    readonly firstName: string;
-    readonly lastName: string;
-    readonly password: string;
-    readonly contact: number;
-    readonly email: string;
-    readonly age: string;
-    readonly gender: string;
-    readonly dateCreated: Date;
-    readonly provider?: Provider;
+    firstName: string;
+    lastName: string;
+    displayPicture?: string;
+    password?: string;
+    contact?: number;
+    email?: string;
+    age?: string;
+    gender?: string;
+    dateCreated: number;
+    provider?: Provider;
 }

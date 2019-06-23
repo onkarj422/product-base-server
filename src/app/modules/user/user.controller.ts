@@ -4,7 +4,7 @@ import { CreateUserDTO } from './dto/user.create.dto';
 import { User } from './user.interface';
 import { RestController } from '../../base';
 
-@Controller('api/user')
+@Controller('user')
 @UsePipes(new ValidationPipe({
     transform: true,
 }))

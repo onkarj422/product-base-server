@@ -4,11 +4,8 @@ import { Model } from 'mongoose';
 import { User } from './user.interface';
 import { CreateUserDTO } from './dto/user.create.dto';
 import { CrudService } from '../../base';
-
-export enum Provider {
-    GOOGLE = 'google',
-    FACEBOOK = 'facebook',
-}
+import { AuthProvider } from 'src/app/authentication/constants';
+import { generateUserFromProfile } from './utils';
 
 @Injectable()
 export class UserService extends CrudService<User, CreateUserDTO> {
@@ -16,14 +13,23 @@ export class UserService extends CrudService<User, CreateUserDTO> {
         super();
     }
 
-    private provider: Provider;
+    private provider: AuthProvider;
 
     public async findOne(options: object) {
         return this.model.findOne({ options }).exec();
     }
 
-    public async generateUser(userData: object, provider) {
-        const user = null;
+    public async create(user: CreateUserDTO): Promise<User> {
+        const createdUser = await this.model(user);
+        return createdUser.save();
+    }
+
+    public async createFromProfile(profile: object, provider: AuthProvider) {
+        let user = null;
+        if (typeof generateUserFromProfile[provider] === 'function') {
+            const userObject = generateUserFromProfile[provider](profile);
+            user = await this.create(userObject);
+        }
         return user;
     }
 
